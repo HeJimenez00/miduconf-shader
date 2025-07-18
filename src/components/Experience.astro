@@ -296,9 +296,9 @@
   const ARCamera = sizes.width / sizes.height;
   let zoom = 0;
   if (sizes.width < 768) {
-    zoom = 18; // movil
+    zoom = 12.5; // movil
   } else if (sizes.width < 1024) {
-    zoom = 13; // tablet
+    zoom = 9; // tablet
   } else {
     zoom = 6.5; // laptop & escritorio
   }
@@ -359,9 +359,22 @@
   const renderPass = new RenderPass(scene, camera);
   composer.addPass(renderPass);
 
+  let pixelSizeRatio, gridSize;
+
+  if(sizes.width < 768) {
+    pixelSizeRatio = 2.0; // movil
+    gridSize = 2.0;
+  } else if (sizes.width < 1024) {
+    pixelSizeRatio = 2.0; // tablet
+    gridSize = 2.9;
+  } else {
+    pixelSizeRatio = 2.0; // laptop & escritorio
+    gridSize = 3.0;
+  }
+
   const ditheringEffect = new DitheringEffect({
-    pixelSizeRatio: 2, // tamano de los pixeles
-    gridSize: 3.0, // tamano de la cuadrícula del dithering
+    pixelSizeRatio, // tamano de los pixeles
+    gridSize, // tamano de la cuadrícula del dithering
     grayscaleOnly: false, // solo blanco y negro
   });
 
@@ -463,9 +476,9 @@
     let zoom;
 
     if (sizes.width < 768) {
-      zoom = 18; // movil
+      zoom = 14; // movil
     } else if (sizes.width < 1024) {
-      zoom = 13; // tablet
+      zoom = 9; // tablet
     } else {
       zoom = 7; // laptop & escritorio
     }
