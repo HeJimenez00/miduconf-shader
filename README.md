@@ -11,6 +11,8 @@ Para acceder a los controles que hay para modificar las luces, dithering, posici
 
 El logo GLB se encunetra en la carpeta public/
 
+Buscar archivo `Experience.astro` ahí esta el componente con todo lo necesario y copiar la carpeta experiece/
+
 ## Utilizarlo
 
 En el archivo `astro.confi.mjs` se encuentra la configuracion para poder utilizar archivos `.glsl` en javascript con el plugin [`vite-plugin-glsl`](https://www.npmjs.com/package/vite-plugin-glsl).
