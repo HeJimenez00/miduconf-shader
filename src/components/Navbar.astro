@@ -1,0 +1,78 @@
+---
+import Discord from "../icons/Discord.svg";
+
+const items = ["speakers", "agenda", "sponsors", "faqs"];
+---
+
+<header>
+  <nav
+    class="flex justify-between items-center w-full fixed z-10 top-[20px] px-[20px]"
+  >
+    <a class="text-[35px] font-semibold">
+      MIDU.<span class="text-primary">CONF</span>
+    </a>
+    <ul class="flex items-center gap-16">
+      {
+        items.map((element) => (
+        <li class="navbar-container">
+        <a
+          href=`#${element}`
+          class="text-xl-code overflow-hidden rounded-[5px] relative block text-default transition-colors duration-200"
+          >
+            <div class="navbar-item px-[10px] py-[8px]">
+              <span class="absolute -translate-y-32 -rotate-6">{element}</span>
+              <span>{element}</span>
+            </div>
+          </a>
+        </li>
+        ))
+      }
+    </ul>
+
+    <a
+      href="/"
+      class="flex items-center gap-8 rounded-[5px] border border-default py-[6px] px-[10px] text-xl-code cta"
+      ><Discord /> Discord</a
+    >
+  </nav>
+</header>
+
+<script>
+  import { gsap } from "gsap";
+
+  document.fonts.ready.then(() => {
+    const container = document.querySelectorAll(".navbar-container");
+
+    container.forEach((container) => {
+      const item = container.querySelector(".navbar-item");
+      container.addEventListener("mouseenter", () => {
+        gsap.to(item, {
+          y: 42,
+          duration: 0.7,
+          stagger: 0.05,
+          ease: "elastic.out(1, 0.75)",
+        });
+      });
+
+      container.addEventListener("mouseleave", () => {
+        gsap.to(item, {
+          y: 0,
+          duration: 0.7,
+          stagger: 0.05,
+          ease: "elastic.out(1, 0.75)",
+        });
+      });
+    });
+  });
+</script>
+
+<style>
+  .navbar-container:hover ~ .navbar-container a,
+  .navbar-container:has(~ .navbar-container:hover) a {
+    color: var(--color-ghost);
+  }
+
+  .navbar-container:hover a {
+    color: var(--color-default);
+  }
+</style>

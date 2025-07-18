@@ -1,0 +1,36 @@
+---
+import Enter from "../icons/Enter.svg";
+import Star from "../icons/Star.svg";
+import Experience from "./Experience.astro";
+---
+
+<section class="h-screen w-full relative">
+  <div
+    class="grid grid-cols-[726px_600px] items-end justify-between gap-40 absolute z-5 bottom-[20px] w-full px-[20px]"
+  >
+    <div class="flex flex-col items-start gap-40">
+      <p
+        class="text-ghost p-16 bg-fg-primary border border-border-fg-primary rounded-[5px] text-xl-code flex items-center gap-8 h-[50px]"
+      >
+        <Star class="star" />
+        Empezamos en: <span class="text-default date">69d 34h 14m 59s</span>
+      </p>
+      <h1 class="inline-block">
+        La nueva era de <span class="block">la programación</span>
+      </h1>
+    </div>
+
+    <div class="flex flex-col items-start max-w-[600px]">
+      <p class="text-xl-medium mb-40">
+        Conferencia de Programación y Desarrollo en Español en Twitch
+      </p>
+      <a
+        href="#"
+        class="text-xl-code flex gap-8 items-center bg-fg-secondary px-16 py-[10px] rounded-[5px] font-family-cta"
+      >
+        <Enter /> obtener ticket
+      </a>
+    </div>
+  </div>
+  <Experience />
+</section>

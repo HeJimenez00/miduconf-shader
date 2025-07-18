@@ -1,0 +1,44 @@
+---
+import "../styles/global.css";
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="generator" content={Astro.generator} />
+    <title>Miduconf</title>
+  </head>
+  <body>
+    <slot />
+  </body>
+</html>
+
+<style>
+  html,
+  body {
+    margin: 0;
+    width: 100%;
+    height: 100%;
+  }
+</style>
+
+<script>
+  import gsap from "gsap";
+
+  gsap.to(".star", {
+    rotate: 180,
+    repeatDelay: 1,
+    duration: 1.2,
+    delay: 0.5,
+    stagger: {
+      each: 1,
+    },
+    ease: "elastic.out(1, 0.75)",
+    repeat: -1,
+  });
+
+  gsap.to(".cta", {});
+</script>

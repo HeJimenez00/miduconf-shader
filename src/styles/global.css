@@ -1,0 +1,139 @@
+@import "tailwindcss";
+
+@font-face {
+  font-family: "code-regular";
+  src: url("/fonts/IBMPlexMono-Regular.woff2") format("woff2");
+  font-weight: 400;
+  font-style: normal;
+}
+@font-face {
+  font-family: "code-medium";
+  src: url("/fonts/IBMPlexMono-Medium.woff2") format("woff2");
+  font-weight: 500;
+  font-style: normal;
+}
+
+@theme {
+  --font-family-monospace: "code-regular";
+  --font-family-cta: "code-medium";
+  --heading-4xl: 4.62rem;
+  --heading-3xl: 3.5rem;
+  --heading-2xl: 1.875rem;
+  --heading-xl: 1.5rem;
+  --heading-xl-code: 1.25rem;
+  --heading-body: 1.125rem;
+  --heading-body-code: 1.125rem;
+  --heading-small-code: 0.875rem;
+
+  --color-dark: oklch(0.1424 0.0109 284.93);
+  --color-primary: oklch(0.6562 0.167 263.48);
+  --color-default: oklch(0.9666 0.015669 266.2796);
+  --color-ghost: oklch(0.6772 0.0228 271.07);
+  --color-border-primary: oklch(0.7824 0.1036 262.93);
+  --color-border-fg-primary: oklch(0.2792 0.0147 279.77);
+  --color-fg-primary: oklch(0.1885 0.0123 277.71);
+  --color-fg-secondary: oklch(0.6562 0.167 263.48);
+
+  --spacing-8: 0.5rem;
+  /* 8px */
+  --spacing-16: 1rem;
+  /* 16px */
+  --spacing-24: 1.5rem;
+  /* 24px */
+  --spacing-32: 2rem;
+  /* 32px */
+  --spacing-40: 2.5rem;
+  /* 40px */
+  --spacing-64: 4rem;
+  /* 64px */
+  --spacing-96: 6rem;
+  /* 96px */
+  --spacing-180: 11.25rem;
+  /* 180px */
+}
+@utility text-4xl-semibold {
+  font-size: clamp(2.5rem, 4vw + 1rem, 4.62rem);
+  line-height: clamp(3rem, 5vw + 1.5rem, 5.813rem);
+  letter-spacing: clamp(-0.8px, -0.2vw - 0.5px, -1.48px);
+}
+@utility text-3xl-semibold {
+  font-size: var(--heading-3xl);
+  line-height: 4rem;
+  letter-spacing: -1.12px;
+}
+@utility text-2xl-semibold {
+  font-size: var(--heading-2xl);
+  line-height: 2.25rem;
+  letter-spacing: 2px;
+  letter-spacing: -0.6px;
+}
+@utility text-xl-medium {
+  font-size: var(--heading-xl);
+  line-height: 2rem;
+  font-weight: 500;
+  letter-spacing: 0.48px;
+}
+@utility text-xl-code {
+  font-size: var(--heading-xl-code);
+  font-family: var(--font-family-monospace);
+  text-transform: uppercase;
+  line-height: 2rem;
+  letter-spacing: 0.4px;
+}
+@utility text-body {
+  font-size: var(--heading-body);
+  line-height: 1.625rem;
+  letter-spacing: 0.36px;
+}
+@utility text-body-code {
+  font-size: var(--heading-body-code);
+  font-family: var(--font-family-monospace);
+  text-transform: uppercase;
+  line-height: 1.625rem;
+  letter-spacing: 0.36px;
+}
+@utility text-small-code {
+  font-size: var(--heading-small-code);
+  text-transform: uppercase;
+  line-height: 1.25rem;
+  letter-spacing: -0.28px;
+}
+
+body {
+  background-color: var(--color-dark);
+  color: var(--color-default);
+
+  h1 {
+    @apply text-4xl-semibold;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4 {
+    text-transform: uppercase;
+    font-weight: 600;
+  }
+  button,
+  p,
+  a,
+  h1,
+  h2,
+  h3,
+  h4,
+  th,
+  td,
+  .date,
+  .navbar-item span,
+  a div {
+    text-box-trim: trim-both;
+    text-box-edge: cap alphabetic;
+    font-feature-settings:
+      "liga" 1,
+      "dlig" 1,
+      "hlig" 1,
+      "cswh" 1,
+      "kern" 1,
+      "ss02" 1 !important;
+  }
+}
