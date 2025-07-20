@@ -1,0 +1,60 @@
+---
+const {
+  text,
+  IconComponent,
+  href,
+  estilo,
+  class: className = "",
+} = Astro.props;
+
+const style = {
+  default: "bg-fg-secondary",
+  discord: "border border-border-fg-primary bg-fg-primary",
+};
+---
+
+<a
+  href={href}
+  class:list={[
+    "cta rounded-[5px] text-xl-code relative mx-auto w-auto overflow-hidden",
+    style[estilo],
+    className,
+  ]}
+>
+  <div
+    class="cta-content py-[12px] px-16 md:py-[10px] lg:py-[6px] lg:px-[12px] space-y-16"
+  >
+    <div class="cta-info flex items-center gap-8 absolute -translate-y-32">
+      <IconComponent class="size-5 lg:size-6" />
+      <span>{text}</span>
+    </div>
+    <div class="cta-info flex items-center gap-8">
+      <IconComponent class="size-5 lg:size-6" />
+      <span>{text}</span>
+    </div>
+  </div>
+</a>
+
+<script>
+  import { gsap } from "gsap";
+
+  const $buttons = document.querySelectorAll(".cta");
+  $buttons.forEach((cta) => {
+    const $ctaContent = cta.querySelector(".cta-content");
+    const items = $ctaContent?.querySelectorAll(".cta-info");
+
+    const animateItems = (y) => {
+      items?.forEach((item) => {
+        gsap.to(item.children, {
+          y,
+          duration: 0.7,
+          stagger: 0.05,
+          ease: "elastic.out(1, 0.75)",
+        });
+      });
+    };
+
+    cta?.addEventListener("mouseenter", () => animateItems(32));
+    cta?.addEventListener("mouseleave", () => animateItems(0));
+  });
+</script>
