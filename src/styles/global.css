@@ -16,14 +16,36 @@
 @theme {
   --font-family-monospace: "code-regular";
   --font-family-cta: "code-medium";
-  --heading-4xl: 4.62rem;
-  --heading-3xl: 3.5rem;
-  --heading-2xl: 1.875rem;
-  --heading-xl: 1.5rem;
-  --heading-xl-code: 1.25rem;
-  --heading-body: 1.125rem;
-  --heading-body-code: 1.125rem;
-  --heading-small-code: 0.875rem;
+
+  /* PC */
+  --heading-4xl-pc: 4.62rem;
+  --heading-3xl-pc: 3.5rem;
+  --heading-2xl-pc: 1.875rem;
+  --heading-xl-pc: 1.5rem;
+  --heading-xl-code-pc: 1.25rem;
+  --heading-body-pc: 1.125rem;
+  --heading-body-code-pc: 1.125rem;
+  --heading-small-code-pc: 0.875rem;
+
+  /* LAPTOP-IPAD */
+  --heading-4xl-ipad: 4rem;
+  --heading-3xl-ipad: 3.125rem;
+  --heading-2xl-ipad: 1.625rem;
+  --heading-xl-ipad: 1.25rem;
+  --heading-xl-code-ipad: 1.125rem;
+  --heading-body-ipad: 1rem;
+  --heading-body-code-ipad: 1rem;
+  --heading-small-code-ipad: 0.875rem;
+
+  /* MOVIL */
+  --heading-4xl-movil: 2.3rem;
+  --heading-3xl-movil: 1.875rem;
+  --heading-2xl-movil: 1.375rem;
+  --heading-xl-movil: 1.125rem;
+  --heading-xl-code-movil: 1rem;
+  --heading-body-movil: 0.875rem;
+  --heading-body-code-movil: 0.875rem;
+  --heading-small-code-movil: 0.75rem;
 
   --color-dark: oklch(0.1424 0.0109 284.93);
   --color-primary: oklch(0.6562 0.167 263.48);
@@ -52,51 +74,89 @@
   /* 180px */
 }
 @utility text-4xl-semibold {
-  font-size: clamp(2.5rem, 4vw + 1rem, 4.62rem);
-  line-height: clamp(3rem, 5vw + 1.5rem, 5.813rem);
-  letter-spacing: clamp(-0.8px, -0.2vw - 0.5px, -1.48px);
+  font-size: clamp(
+    var(--heading-4xl-movil),
+    1.712rem + 2.507vw,
+    var(--heading-4xl-pc)
+  );
+  line-height: clamp(3.025rem, 2rem + 3.297vw, 5.813rem);
+  letter-spacing: -1.48px;
 }
 @utility text-3xl-semibold {
-  font-size: var(--heading-3xl);
-  line-height: 4rem;
+  font-size: clamp(
+    var(--heading-3xl-movil),
+    1.584rem + 1.774vw,
+    var(--heading-3xl-pc)
+  );
+  line-height: clamp(2.625rem, 2.244rem + 1.626vw, 4rem);
   letter-spacing: -1.12px;
 }
 @utility text-2xl-semibold {
-  font-size: var(--heading-2xl);
-  line-height: 2.25rem;
-  letter-spacing: 2px;
+  font-size: clamp(
+    var(--heading-2xl-movil),
+    1.236rem + 0.591vw,
+    var(--heading-2xl-pc)
+  );
+  line-height: clamp(1.75rem, 1.577rem + 0.739vw, 2.375rem);
   letter-spacing: -0.6px;
 }
 @utility text-xl-medium {
-  font-size: var(--heading-xl);
-  line-height: 2rem;
+  font-size: clamp(
+    var(--heading-xl-movil),
+    1.021rem + 0.443vw,
+    var(--heading-xl-pc)
+  );
+  line-height: clamp(1.688rem, 1.602rem + 0.369vw, 2rem);
   font-weight: 500;
   letter-spacing: 0.48px;
 }
 @utility text-xl-code {
-  font-size: var(--heading-xl-code);
+  font-size: clamp(
+    var(--heading-xl-code-movil),
+    0.931rem + 0.296vw,
+    var(--heading-xl-code-pc)
+  );
   font-family: var(--font-family-monospace);
   text-transform: uppercase;
-  line-height: 2rem;
+  line-height: clamp(1.25rem, 1.042rem + 0.887vw, 2rem);
   letter-spacing: 0.4px;
 }
 @utility text-body {
-  font-size: var(--heading-body);
-  line-height: 1.625rem;
+  font-size: clamp(
+    var(--heading-body-movil),
+    0.806rem + 0.296vw,
+    var(--heading-body-pc)
+  );
+  line-height: clamp(1.375rem, 1.306rem + 0.296vw, 1.625rem);
   letter-spacing: 0.36px;
 }
 @utility text-body-code {
-  font-size: var(--heading-body-code);
+  font-size: clamp(
+    var(--heading-body-code-movil),
+    0.806rem + 0.296vw,
+    var(--heading-body-code-pc)
+  );
   font-family: var(--font-family-monospace);
   text-transform: uppercase;
-  line-height: 1.625rem;
+  line-height: clamp(1.375rem, 1.306rem + 0.296vw, 1.625rem);
   letter-spacing: 0.36px;
 }
 @utility text-small-code {
-  font-size: var(--heading-small-code);
+  font-size: clamp(
+    var(--heading-small-code-movil),
+    0.715rem + 0.148vw,
+    var(--heading-small-code-pc)
+  );
   text-transform: uppercase;
-  line-height: 1.25rem;
+  line-height: clamp(1rem, 0.827rem + 0.739vw, 1.625rem);
   letter-spacing: -0.28px;
+}
+
+@utility clipHidden {
+  clip-path: polygon(0 0, 100% 0, 100% 0, 0 0);
+}
+@utility clipVisible {
+  clip-path: none;
 }
 
 body {
@@ -135,5 +195,9 @@ body {
       "cswh" 1,
       "kern" 1,
       "ss02" 1 !important;
+  }
+  ::selection {
+    color: var(--color-default);
+    background-color: var(--color-fg-secondary);
   }
 }
