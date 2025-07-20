@@ -1,0 +1,57 @@
+---
+import Clock from "../icons/Clock.svg";
+---
+
+<p
+  class="text-ghost py-2 px-4 bg-fg-primary border border-border-fg-primary rounded-[5px] text-xl-code flex items-center gap-8"
+>
+  <Clock class="clock size-[18px]" />
+  Empezamos en: <span class="text-default counter">00D 00H 00M 00S</span>
+</p>
+
+<script>
+  import { gsap } from "gsap";
+  const $clock = document.querySelectorAll(".clock rect");
+
+  let counter = 0;
+
+  function clockAnimation() {
+    counter += 90;
+    gsap.to($clock[6], {
+      rotate: counter,
+      y: -1,
+      duration: 1.0,
+      transformOrigin: "center 100%",
+      ease: "elastic.out(0.75, 0.4)",
+    });
+  }
+
+  setInterval(() => clockAnimation(), 1000);
+
+  let fechaObjetivo = new Date("Sep 11, 2025 24:00:00").getTime();
+  const $counter = document.querySelector(".counter");
+
+  if (fechaObjetivo === new Date("Sep 10, 2025 24:00:00").getTime()) {
+    fechaObjetivo = new Date("Sep 11, 2025 16:00:00").getTime();
+  }
+  const counterDown = () => {
+    const now = new Date().getTime();
+    const diference = fechaObjetivo - now;
+
+    // obtener los dias, horas, minutos y segundos
+    const days = Math.floor(diference / (1000 * 60 * 60 * 24));
+    const hours = Math.floor(
+      (diference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60),
+    );
+    const minutes = Math.floor((diference % (1000 * 60 * 60)) / (1000 * 60));
+    const seconds = Math.floor((diference % (1000 * 60)) / 1000);
+
+    if ($counter) {
+      $counter.innerHTML = `${days}D ${hours}H ${minutes}M ${seconds}S`;
+    }
+  };
+
+  counterDown();
+
+  setInterval(counterDown, 1000);
+</script>

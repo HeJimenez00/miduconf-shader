@@ -1,25 +1,31 @@
 ---
 import Discord from "../icons/Discord.svg";
+import Midudev from "../icons/Midudev.svg";
+import Burger from "../icons/Burger.svg";
+import CallToAction from "./CallToAction.astro";
 
 const items = ["speakers", "agenda", "sponsors", "faqs"];
 ---
 
 <header>
   <nav
-    class="flex justify-between items-center w-full fixed z-10 top-[20px] px-[20px]"
+    class="flex justify-between items-center w-full fixed top-5 z-10 px-5"
   >
-    <a class="text-[35px] font-semibold">
+    <a href="/" class="block lg:hidden relative z-10">
+      <Midudev class="size-[42px]" />
+    </a>
+    <a class="text-[35px] font-semibold hidden lg:block">
       MIDU.<span class="text-primary">CONF</span>
     </a>
-    <ul class="flex items-center gap-16">
+    <ul class="navbarList clipHidden bg-fg-primary left-[10px] right-[10px] fixed top-[10px] rounded-[10px] pt-[80px] space-y-5 pb-5 lg:clipVisible lg:bg-transparent lg:p-0 lg:flex lg:relative">
       {
         items.map((element) => (
-        <li class="navbar-container">
+        <li class="navbar-container text-center">
         <a
           href=`#${element}`
-          class="text-xl-code overflow-hidden rounded-[5px] relative block text-default transition-colors duration-200"
+          class="text-2xl uppercase font-family-monospace overflow-hidden rounded-[5px] relative block text-default transition-colors duration-200  lg:text-xl-code lg:font-family-monospace"
           >
-            <div class="navbar-item px-[10px] py-[8px]">
+            <div class="navbar-item px-[10px] py-8">
               <span class="absolute -translate-y-32">{element}</span>
               <span>{element}</span>
             </div>
@@ -29,40 +35,73 @@ const items = ["speakers", "agenda", "sponsors", "faqs"];
       }
     </ul>
 
-    <a
-      href="/"
-      class="flex items-center gap-8 rounded-[5px] border border-default py-[6px] px-[10px] text-xl-code cta"
-      ><Discord /> Discord</a
-    >
+    <ul class="flex gap-16 relative z-10">
+      <CallToAction
+        text="Discord"
+        estilo="discord"
+        IconComponent={Discord}
+        href="/"
+      />
+      <button class="burguer px-[12px] py-[8px] border border-border-fg-primary bg-fg-primary rounded-[5px] flex justify-center items-center lg:hidden cursor-pointer">
+        <Burger class="size-16" />
+      </button>
+    </ul>
   </nav>
 </header>
 
 <script>
   import { gsap } from "gsap";
 
+  const $burguer = document.querySelector(".burguer");
+  const $burguerRect = $burguer?.querySelectorAll("svg rect");
+  const $navbarList = document.querySelector(".navbarList");
+  const match = window.matchMedia("(max-width: 760px)")
+
+  let isActive = false;
+  let tl = gsap.timeline({defaults: { ease: "power4.out", duration: 0.5, stagger: 0.05}})
+
+    $burguer?.addEventListener("click", () => toggleNavbar());
+
+    function toggleNavbar() {
+      tl.to($burguerRect[0], {
+        y: isActive ? 0 : 5,
+        rotation: isActive ? 0 : -45,
+        transformOrigin: "50% center",
+      }).to($burguerRect[1], {
+        y: isActive ? 0 : -5,
+        rotation: isActive ? 0 : 45,
+        transformOrigin: "55% 55%",
+        }, "<").to($navbarList, {
+        clipPath: isActive ? "polygon(0% 0%, 100% 0%, 100% 0%, 0% 0%)" : "polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%)",
+        }, "<")
+      isActive = !isActive;
+    }
+
   document.fonts.ready.then(() => {
-    const container = document.querySelectorAll(".navbar-container");
+    if(!match.matches) {
+      const container = document.querySelectorAll(".navbar-container");
 
-    container.forEach((container) => {
-      const item = container.querySelector(".navbar-item");
-      container.addEventListener("mouseenter", () => {
-        gsap.to(item, {
-          y: 42,
-          duration: 0.7,
-          stagger: 0.05,
-          ease: "elastic.out(1, 0.75)",
+      container.forEach((container) => {
+        const item = container.querySelector(".navbar-item");
+        container.addEventListener("mouseenter", () => {
+          gsap.to(item, {
+            y: 42,
+            duration: 0.7,
+            stagger: 0.05,
+            ease: "elastic.out(1, 0.75)",
+          });
+        });
+
+        container.addEventListener("mouseleave", () => {
+          gsap.to(item, {
+            y: 0,
+            duration: 0.7,
+            stagger: 0.05,
+            ease: "elastic.out(1, 0.75)",
+          });
         });
       });
-
-      container.addEventListener("mouseleave", () => {
-        gsap.to(item, {
-          y: 0,
-          duration: 0.7,
-          stagger: 0.05,
-          ease: "elastic.out(1, 0.75)",
-        });
-      });
-    });
+    }
   });
 </script>
 
