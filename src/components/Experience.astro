@@ -1,6 +1,6 @@
 <div class="w-full h-screen">
   <div
-    class="absolute w-full h-screen bg-radial from-transparent from-50% to-dark to-70%"
+    class="absolute w-full h-screen bg-radial from-transparent from-60% to-dark to-90% lg:from-45% lg:to-75%"
   >
   </div>
   <canvas id="midu3d" class="absolute -z-1"></canvas>
@@ -26,9 +26,9 @@
 <script>
   import * as THREE from "three";
   import { EffectPass, RenderPass, EffectComposer } from "postprocessing";
-  import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader.js";
+  import { GLTFLoader } from "three/addons/loaders/GLTFLoader.js";
   import { RGBELoader } from "three/examples/jsm/loaders/RGBELoader.js";
-  import { OrbitControls } from "three/examples/jsm/controls/OrbitControls.js";
+  import { OrbitControls } from "three/addons/controls/OrbitControls.js";
   import { DitheringEffect } from "./experience/effect/DitheringEffect";
   import GUI from "lil-gui";
   import gsap from "gsap";
@@ -190,7 +190,6 @@
   });
 
   // :::::: MODELO & RAYCASTER ::::::
-  let offsetZ = 0;
   const pointer = new THREE.Vector2();
   const raycaster = new THREE.Raycaster();
   let isPressed = false;
@@ -231,11 +230,9 @@
           z: 178,
         },
       );
-
-      offsetZ = sizes.width < 768 ? 3.5 : sizes.width < 1024 ? 2 : 0.3;
-
+      let offsetZ = sizes.width < 768 ? 3.5 : sizes.width < 1024 ? 2 : 0.3;
       gsap.to(child.position, {
-        z: finalZ - offsetZ,
+        z: () => finalZ - offsetZ,
         duration: 1.2,
         ease: "elastic.out(1, 0.5)",
         delay: idx * 0.1,
@@ -363,6 +360,7 @@
     } else {
       zoom = 7; // laptop & escritorio
     }
+
     camera.aspect = sizes.width / sizes.height;
     camera.left = -ARCamera * zoom + 0.6;
     camera.right = ARCamera * zoom - 1;
