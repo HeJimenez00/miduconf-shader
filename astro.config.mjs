@@ -9,5 +9,7 @@ export default defineConfig({
   vite: {
     plugins: [tailwindcss(), glsl()],
   },
+  server: {
+    allowedHosts: [".tunnelmole.net"],
+  },
 });
-
