@@ -1,0 +1,37 @@
+---
+import Enter from "../../icons/Enter.svg";
+import Counter from "../Counter.astro";
+import Experience from "../Experience.astro";
+import CallToAction from "../CallToAction.astro";
+---
+
+<section class="h-screen w-full relative">
+  <div
+    class="lg:grid lg:grid-cols-2 xl:grid-cols-[726px_500px] items-end justify-between absolute z-5 bottom-5 w-full px-5"
+  >
+    <div
+      class="flex flex-col gap-24 items-center mx-auto lg:ml-0 lg:items-start"
+    >
+      <Counter />
+      <h1 class="inline-block w-full text-center lg:text-left">
+        La nueva era de <span class="block">la programación</span>
+      </h1>
+    </div>
+
+    <div class="flex flex-col items-start w-full mt-40 gap-24 lg:items-end">
+      <p
+        class="text-xl-medium text-center mx-auto w-full 2xl:max-w-[520px] lg:ml-0 lg:text-left"
+      >
+        Conferencia de Programación y Desarrollo en Español en Twitch
+      </p>
+      <CallToAction
+        class="ml-0"
+        text="Obtener ticket"
+        estilo="default"
+        IconComponent={Enter}
+        href="/"
+      />
+    </div>
+  </div>
+  <Experience />
+</section>
