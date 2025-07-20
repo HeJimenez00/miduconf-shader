@@ -1,6 +1,6 @@
 import { Effect } from "postprocessing";
 import * as THREE from "three";
-import ditheringShader from "../fragment.glsl";
+import ditheringShader from "../shaders/model/fragment.glsl";
 
 export class DitheringEffect extends Effect {
   constructor({
@@ -80,4 +80,3 @@ export class DitheringEffect extends Effect {
     }
   }
 }
-
