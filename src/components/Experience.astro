@@ -1,4 +1,4 @@
-<div class="w-full h-screen">
+<div class="w-full h-screen experience">
   <div
     class="absolute w-full h-screen bg-radial from-transparent from-60% to-dark to-90% lg:from-45% lg:to-75%"
   >
@@ -243,8 +243,13 @@
   });
 
   function onMouseMoveRaycaster(event) {
-    pointer.x = (event.clientX / sizes.width) * 2 - 1;
-    pointer.y = -(event.clientY / sizes.height) * 2 + 1;
+    const rect = canvas?.getBoundingClientRect();
+
+    const x = event.clientX - rect.left;
+    const y = event.clientY - rect.top;
+
+    pointer.x = (x / sizes.width) * 2 - 1;
+    pointer.y = -(y / sizes.height) * 2 + 1;
   }
 
   // :::::: RAYCASTER ::::::
