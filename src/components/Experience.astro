@@ -194,6 +194,7 @@
   const raycaster = new THREE.Raycaster();
   let isPressed = false;
   let isRotating = false;
+  let isHovered = false; // simular el mouseenter y mouseleave
   let shakeAnimation;
 
   const loader = new GLTFLoader();
@@ -252,6 +253,25 @@
     pointer.y = -(y / sizes.height) * 2 + 1;
   }
 
+  function onEnter() {
+    gsap.to(model.scale, {
+      x: 1.1,
+      y: 1.1,
+      z: 1.1,
+      duration: 0.5,
+      ease: "elastic.out(1, 0.55)",
+    });
+  }
+  function onLeave() {
+    gsap.to(model.scale, {
+      x: 1.0,
+      y: 1.0,
+      z: 1.0,
+      duration: 0.5,
+      ease: "elastic.out(1, 0.55)",
+    });
+  }
+
   // :::::: RAYCASTER ::::::
   function moveRaycast(event) {
     if (!model || isPressed) return;
@@ -263,24 +283,18 @@
     // rasteramos
     const intersects = raycaster.intersectObjects(model.children);
 
-    if (intersects.length) {
-      document.body.style.cursor = "pointer";
-      gsap.to(model.scale, {
-        x: 1.1,
-        y: 1.1,
-        z: 1.1,
-        duration: 0.5,
-        ease: "elastic.out(1, 0.55)",
-      });
+    if (intersects.length > 0) {
+      if (!isHovered) {
+        isHovered = true;
+        document.body.style.cursor = "pointer";
+        onEnter();
+      }
     } else {
-      document.body.style.cursor = "default";
-      gsap.to(model.scale, {
-        x: 1.0,
-        y: 1.0,
-        z: 1.0,
-        duration: 0.5,
-        ease: "elastic.out(1, 0.55)",
-      });
+      if (isHovered) {
+        isHovered = false;
+        document.body.style.cursor = "default";
+        onLeave();
+      }
     }
   }
 
@@ -318,9 +332,7 @@
     isPressed = false;
     isRotating = true;
 
-    if (shakeAnimation) {
-      shakeAnimation.kill();
-    }
+    if (shakeAnimation) shakeAnimation.kill();
 
     gsap.to(model.scale, {
       x: 1,
@@ -328,6 +340,14 @@
       z: 1,
       duration: 0.5,
       ease: "elastic.out(1, 0.55)",
+      onUpdate: () => {
+        raycaster.setFromCamera(pointer, camera);
+        const intersects = raycaster.intersectObjects(model.children, true);
+        if (intersects.length) {
+          isHovered = true;
+          onEnter();
+        }
+      },
     });
     gsap.to(model.rotation, {
       z: `+=${Math.PI * 2}`,
