@@ -24,21 +24,3 @@ import "../styles/global.css";
     height: 100%;
   }
 </style>
-
-<script>
-  import gsap from "gsap";
-
-  gsap.to(".star", {
-    rotate: 180,
-    repeatDelay: 1,
-    duration: 1.2,
-    delay: 0.5,
-    stagger: {
-      each: 1,
-    },
-    ease: "elastic.out(1, 0.75)",
-    repeat: -1,
-  });
-
-  gsap.to(".cta", {});
-</script>
