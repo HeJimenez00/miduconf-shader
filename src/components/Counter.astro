@@ -1,35 +1,152 @@
 ---
 import Clock from "../icons/Clock.svg";
+import X from "../icons/X.svg";
 ---
 
 <p
-  class="text-ghost py-2 px-4 bg-fg-primary border border-border-fg-primary rounded-[5px] text-xl-code flex items-center gap-8"
+  class="counter text-ghost py-2 px-4 bg-fg-primary border border-border-fg-primary rounded-[5px] text-xl-code flex items-center gap-8"
 >
   <Clock class="clock size-[18px]" />
-  Empezamos en: <span class="text-default counter">00D 00H 00M 00S</span>
+  Empezamos en: <span class="text-default counter-date">00D 00H 00M 00S</span>
 </p>
+
+<div
+  class="counter-scroll hidden lg:block text-ghost p-2 bg-fg-primary border border-border-fg-primary rounded-[5px] text-xl-code space-y-16 fixed z-10 left-0 -translate-x-full top-96 w-full max-w-[290px]"
+>
+  <header class="flex justify-between counter-scroll-header">
+    <span class="flex items-center gap-8">
+      <Clock class="clock size-[18px]" />
+      <span class="text-body-code">Empezamos en:</span>
+    </span>
+    <button
+      class="counter-scroll-button bg-fg-secondary size-5 flex justify-center items-center rounded-[3px] hover:cursor-pointer"
+    >
+      <X class="size-3" />
+    </button>
+  </header>
+
+  <footer class="flex justify-between counter-scroll-footer">
+    <div class="flex flex-col text-body-code items-center">
+      <span class="text-default counter-days">53</span>
+      <span class="counter-date-scroll">hrs</span>
+    </div>
+    <span>:</span>
+    <div class="flex flex-col items-center text-body-code">
+      <span class="text-default counter-hours">5</span>
+      <span class="counter-date-scroll">hrs</span>
+    </div>
+    <span>:</span>
+    <div class="flex flex-col items-center text-body-code">
+      <span class="text-default counter-minutes">24</span>
+      <span class="counter-date-scroll">min</span>
+    </div>
+    <span>:</span>
+    <div class="flex flex-col items-center text-body-code">
+      <span class="text-default counter-seconds">4</span>
+      <span class="counter-date-scroll">sec</span>
+    </div>
+  </footer>
+</div>
 
 <script>
   import { gsap } from "gsap";
-  const $clock = document.querySelectorAll(".clock rect");
+  import ScrollTrigger from "gsap/ScrollTrigger";
+  gsap.registerPlugin(ScrollTrigger);
 
-  let counter = 0;
+  const $clock = document.querySelectorAll(".clock");
+  const $counterText = document.querySelector(".counter-date");
+  const $counterScrollFooter = document?.querySelector(
+    ".counter-scroll-footer",
+  );
+  const $counterScrollDays =
+    $counterScrollFooter?.querySelector(".counter-days");
+  const $counterScrollHours =
+    $counterScrollFooter?.querySelector(".counter-hours");
+  const $counterScrollMinutes =
+    $counterScrollFooter?.querySelector(".counter-minutes");
+  const $counterScrollSeconds =
+    $counterScrollFooter?.querySelector(".counter-seconds");
+  const $buttonClose = document.querySelector(".counter-scroll-button");
 
-  function clockAnimation() {
-    counter += 90;
-    gsap.to($clock[6], {
-      rotate: counter,
-      y: -1,
+  let isCounterClosed = false;
+  let scrollTriggerInstance = null;
+  let fechaObjetivo = new Date("Sep 11, 2025 24:00:00").getTime();
+
+  $buttonClose.addEventListener("mouseenter", () => {
+    gsap.to(".counter-scroll-button svg", {
+      scale: 0.9,
+      rotation: 90,
+      duration: 0.5,
+      ease: "elastic.out(1.2, 0.7)",
+    });
+    gsap.to(".counter-scroll-button", {
+      scale: 0.9,
+      duration: 0.5,
+      ease: "elastic.out(1.2, 0.7)",
+    });
+  });
+  $buttonClose.addEventListener("mouseleave", () => {
+    gsap.to(".counter-scroll-button svg", {
+      scale: 1.0,
+      rotation: 0,
+      ease: "elastic.out(1.2, 0.7)",
+    });
+    gsap.to(".counter-scroll-button", {
+      scale: 1.0,
+      duration: 0.5,
+      ease: "elastic.out(1.2, 0.7)",
+    });
+  });
+  $buttonClose.addEventListener("click", () => {
+    isCounterClosed = true;
+    if (scrollTriggerInstance) {
+      scrollTriggerInstance.kill();
+      scrollTriggerInstance = null;
+    }
+    gsap.to(".counter-scroll", {
+      x: -300,
+      ease: "elastic.out(1.2, 0.7)",
       duration: 1.0,
-      transformOrigin: "center 100%",
-      ease: "elastic.out(0.75, 0.4)",
+    });
+  });
+
+  function scrollCounter() {
+    scrollTriggerInstance = ScrollTrigger.create({
+      trigger: "body",
+      start: "top -100%",
+      onEnter: () => {
+        gsap.to(".counter-scroll", {
+          x: 20,
+          ease: "elastic.out(1.2, 0.7)",
+          duration: 1.0,
+        });
+      },
+      onLeaveBack: () => {
+        gsap.to(".counter-scroll", {
+          x: -300,
+          ease: "elastic.out(1.2, 0.7)",
+          duration: 1.0,
+        });
+      },
     });
   }
+  scrollCounter();
 
-  setInterval(() => clockAnimation(), 1000);
-
-  let fechaObjetivo = new Date("Sep 11, 2025 24:00:00").getTime();
-  const $counter = document.querySelector(".counter");
+  function clockAnimation(item) {
+    gsap.to(item, {
+      rotate: "+=90",
+      y: -1,
+      duration: 1.0,
+      delay: 1,
+      transformOrigin: "center 100%",
+      ease: "elastic.out(1, 0.5)",
+    });
+  }
+  $clock.forEach((item) => {
+    const rect = item.querySelectorAll("rect");
+    clockAnimation(rect[6]);
+    setInterval(() => clockAnimation(rect[6]), 1000);
+  });
 
   if (fechaObjetivo === new Date("Sep 10, 2025 24:00:00").getTime()) {
     fechaObjetivo = new Date("Sep 11, 2025 16:00:00").getTime();
@@ -46,8 +163,12 @@ import Clock from "../icons/Clock.svg";
     const minutes = Math.floor((diference % (1000 * 60 * 60)) / (1000 * 60));
     const seconds = Math.floor((diference % (1000 * 60)) / 1000);
 
-    if ($counter) {
-      $counter.innerHTML = `${days}D ${hours}H ${minutes}M ${seconds}S`;
+    if ($counterText && $counterScrollFooter) {
+      $counterText.innerHTML = `${days}D ${hours}H ${minutes}M ${seconds}S`;
+      $counterScrollDays.innerHTML = days;
+      $counterScrollHours.innerHTML = hours;
+      $counterScrollMinutes.innerHTML = minutes;
+      $counterScrollSeconds.innerHTML = seconds;
     }
   };
 
