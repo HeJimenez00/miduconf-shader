@@ -76,10 +76,10 @@
 @utility text-4xl-semibold {
   font-size: clamp(
     var(--heading-4xl-movil),
-    1.712rem + 2.507vw,
+    1.712rem + 2.307vw,
     var(--heading-4xl-pc)
   );
-  line-height: clamp(3.025rem, 2rem + 3.297vw, 5.813rem);
+  line-height: clamp(3.025rem, 2rem + 2.597vw, 5.813rem);
   letter-spacing: -1.48px;
 }
 @utility text-3xl-semibold {
@@ -103,7 +103,7 @@
 @utility text-xl-medium {
   font-size: clamp(
     var(--heading-xl-movil),
-    1.021rem + 0.443vw,
+    1.021rem + 0.323vw,
     var(--heading-xl-pc)
   );
   line-height: clamp(1.688rem, 1.602rem + 0.369vw, 2rem);
@@ -113,12 +113,12 @@
 @utility text-xl-code {
   font-size: clamp(
     var(--heading-xl-code-movil),
-    0.931rem + 0.296vw,
+    0.931rem + 0.196vw,
     var(--heading-xl-code-pc)
   );
   font-family: var(--font-family-monospace);
   text-transform: uppercase;
-  line-height: clamp(1.25rem, 1.042rem + 0.887vw, 2rem);
+  line-height: clamp(1.25rem, 1.042rem + 0.687vw, 2rem);
   letter-spacing: 0.4px;
 }
 @utility text-body {
