@@ -55,7 +55,6 @@ const items = ["speakers", "agenda", "sponsors", "faqs"];
   const $burguer = document.querySelector(".burguer");
   const $burguerRect = $burguer?.querySelectorAll("svg rect");
   const $navbarList = document.querySelector(".navbarList");
-  const match = window.matchMedia("(max-width: 760px)")
 
   let isActive = false;
   let tl = gsap.timeline({defaults: { ease: "power4.out", duration: 0.5, stagger: 0.05}})
@@ -76,33 +75,6 @@ const items = ["speakers", "agenda", "sponsors", "faqs"];
         }, "<")
       isActive = !isActive;
     }
-
-  document.fonts.ready.then(() => {
-    if(!match.matches) {
-      const container = document.querySelectorAll(".navbar-container");
-
-      container.forEach((container) => {
-        const item = container.querySelector(".navbar-item");
-        container.addEventListener("mouseenter", () => {
-          gsap.to(item, {
-            y: 42,
-            duration: 0.7,
-            stagger: 0.05,
-            ease: "elastic.out(1, 0.75)",
-          });
-        });
-
-        container.addEventListener("mouseleave", () => {
-          gsap.to(item, {
-            y: 0,
-            duration: 0.7,
-            stagger: 0.05,
-            ease: "elastic.out(1, 0.75)",
-          });
-        });
-      });
-    }
-  });
 </script>
 
 <style>
