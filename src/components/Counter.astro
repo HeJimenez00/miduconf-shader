@@ -132,20 +132,25 @@ import X from "../icons/X.svg";
   }
   scrollCounter();
 
-  function clockAnimation(item) {
+  function clockAnimation(item, rotate) {
     gsap.to(item, {
-      rotate: "+=90",
+      rotate,
       y: -1,
+      delay: 1.0,
       duration: 1.0,
-      delay: 1,
       transformOrigin: "center 100%",
       ease: "elastic.out(1, 0.5)",
     });
   }
   $clock.forEach((item) => {
+    let currentRotation = 90;
+
     const rect = item.querySelectorAll("rect");
-    clockAnimation(rect[6]);
-    setInterval(() => clockAnimation(rect[6]), 1000);
+    clockAnimation(rect[6], currentRotation);
+    setInterval(() => {
+      currentRotation += 90;
+      clockAnimation(rect[6], currentRotation);
+    }, 1000);
   });
 
   if (fechaObjetivo === new Date("Sep 10, 2025 24:00:00").getTime()) {
