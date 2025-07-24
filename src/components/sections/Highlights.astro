@@ -1,0 +1,90 @@
+---
+import Title from "../Title.astro";
+import Star from "../../icons/Star.svg";
+
+const highlights = ["I.A.", "ui/ux", "live coding", "charlas"];
+const highlights2 = ["workshops", "animaciones", "novedades", "sorteos"];
+---
+
+<section class="py-180 overflow-hidden h-screen">
+  <Title>Que esperar</Title>
+  <div class="pt-64 flex flex-col gap-40 container-infinite-scroll">
+    <ul
+      class="scroll-container flex flex-row items-center gap-40 whitespace-nowrap infinite-scroll-top m-0 w-max"
+    >
+      {
+        highlights.map((highlight) => (
+          <li class="highlight-item flex items-center gap-40">
+            <span class="uppercase font-semibold text-[100px] lg:text-[180px] block text-fg-primary hover:text-primary duration-300 leading-none selection:bg-transparent">
+              {highlight}
+            </span>
+            <Star class="size-32 lg:size-[40px] star-highlight" />
+          </li>
+        ))
+      }
+    </ul>
+    <ul
+      data-direction="right"
+      class="scroll-container flex flex-row items-center gap-40 whitespace-nowrap infinite-scroll-bottom m-0 w-max"
+    >
+      {
+        highlights2.map((highlight) => (
+          <li class="highlight-item flex items-center gap-40">
+            <span class="uppercase font-semibold text-[100px] lg:text-[180px] block text-fg-primary hover:text-primary duration-300 leading-none selection:bg-transparent">
+              {highlight}
+            </span>
+            <Star class="size-32 lg:size-[40px] star-highlight" />
+          </li>
+        ))
+      }
+    </ul>
+  </div>
+</section>
+
+<style>
+  .scroll-container {
+    animation: infinite-scroll var(--duration, 20s) linear infinite
+      var(--direction, normal);
+  }
+  .scroll-container[data-direction="right"] {
+    --direction: reverse;
+  }
+
+  @keyframes infinite-scroll {
+    from {
+      transform: translate(0);
+    }
+    to {
+      transform: translate(calc(var(--position, -50%) - 1.5rem));
+    }
+  }
+</style>
+
+<script>
+  import gsap from "gsap";
+
+  const scrollTop = document.querySelector(".infinite-scroll-top");
+  const scrollBottom = document.querySelector(".infinite-scroll-bottom");
+
+  function scrollAnimation(container) {
+    const items = container.querySelectorAll(".highlight-item");
+    items.forEach((item) => {
+      const p_clone = item?.cloneNode(true);
+      container?.appendChild(p_clone);
+    });
+  }
+
+  scrollAnimation(scrollTop);
+  scrollAnimation(scrollBottom);
+
+  gsap.to(".star-highlight", {
+    rotation: 180,
+    duration: 0.8,
+    stagger: {
+      from: "random",
+      amount: 1.5,
+    },
+    repeat: -1,
+    ease: "elastic.out(1, 0.75)",
+  });
+</script>
